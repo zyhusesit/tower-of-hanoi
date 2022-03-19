@@ -20,9 +20,6 @@ void hanoi(MyStack *t, int n);//模拟实现n个盘子的汉诺塔问题
 void showStack(MyStack *T);//显示所有栈中的内容
 int getTop(MyStack *t);//返回栈顶盘子的编号
 void move(MyStack *source, MyStack *target);
-
-void moveHelper(MyStack *stack1, MyStack *stack2);
-
 void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n);
 
 int main() {
@@ -132,18 +129,7 @@ void showStack(MyStack *T)//移动结束后，显示三个栈的内容
 
 void hanoi(MyStack *T, int n)//处理过程中把盘子移动的过程记录下来，就是要输出“将XX号盘子从XX移动到XX”
 {
-    int total_movement = 1;
-    while (n--) {
-        total_movement *= 2;
-    }
-    for (int i = 1; i < total_movement; ++i) {
-        if (i % 3 == 0)
-            moveHelper(T + 1, T + 2);
-        else if (i % 3 == 1)
-            moveHelper(T, T + 2);
-        else if (i % 3 == 2)
-            moveHelper(T, T + 1);
-    }
+    hanoiRecursion(T,T+1,T+2,n);
 }
 
 void move(MyStack *source, MyStack *target) {
@@ -157,24 +143,15 @@ void move(MyStack *source, MyStack *target) {
     push(target, pop(source));
 }
 
-void moveHelper(MyStack *stack1, MyStack *stack2) {
-    if (isEmpty(stack1))
-        move(stack2, stack1);
-    else if (isEmpty(stack2))
-        move(stack1, stack2);
-    else if (getTop(stack1) > getTop(stack2))
-        move(stack2, stack1);
-    else
-        move(stack1, stack2);
-}
 
-//void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n) {
-//    if (n > 0) {
-//        hanoiRecursion(source, auxiliary, target, n - 1);
-//        move(source, target);
-//        hanoiRecursion(auxiliary, target, source, n - 1);
-//    }
-//}
+
+void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n) {
+    if (n > 0) {
+        hanoiRecursion(source, auxiliary, target, n - 1);
+        move(source, target);
+        hanoiRecursion(auxiliary, target, source, n - 1);
+    }
+}
 
 
 
