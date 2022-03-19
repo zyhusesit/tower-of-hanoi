@@ -143,8 +143,6 @@ void move(MyStack *source, MyStack *target) {
     push(target, pop(source));
 }
 
-
-
 void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n) {
     if (n > 0) {
         hanoiRecursion(source, auxiliary, target, n - 1);
@@ -152,6 +150,3 @@ void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n)
         hanoiRecursion(auxiliary, target, source, n - 1);
     }
 }
-
-
-
