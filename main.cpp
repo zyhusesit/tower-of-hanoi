@@ -20,10 +20,7 @@ void hanoi(MyStack *t, int n);//模拟实现n个盘子的汉诺塔问题
 void showStack(MyStack *T);//显示所有栈中的内容
 int getTop(MyStack *t);//返回栈顶盘子的编号
 void move(MyStack *source, MyStack *target);
-
-void moveHelper(MyStack *stack1, MyStack *stack2);
-
-void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n);
+void safeMove(MyStack *stack1, MyStack *stack2);
 
 int main() {
     MyStack T[3];//T[0],T[1],T[2]分别表示3个栈
@@ -138,11 +135,11 @@ void hanoi(MyStack *T, int n)//处理过程中把盘子移动的过程记录下�
     }
     for (int i = 1; i < total_movement; ++i) {
         if (i % 3 == 0)
-            moveHelper(T + 1, T + 2);
+            safeMove(T + 1, T + 2);
         else if (i % 3 == 1)
-            moveHelper(T, T + 2);
+            safeMove(T, T + 2);
         else if (i % 3 == 2)
-            moveHelper(T, T + 1);
+            safeMove(T, T + 1);
     }
 }
 
@@ -157,7 +154,7 @@ void move(MyStack *source, MyStack *target) {
     push(target, pop(source));
 }
 
-void moveHelper(MyStack *stack1, MyStack *stack2) {
+void safeMove(MyStack *stack1, MyStack *stack2) {
     if (isEmpty(stack1))
         move(stack2, stack1);
     else if (isEmpty(stack2))
@@ -167,14 +164,3 @@ void moveHelper(MyStack *stack1, MyStack *stack2) {
     else
         move(stack1, stack2);
 }
-
-//void hanoiRecursion(MyStack *source, MyStack *target, MyStack *auxiliary, int n) {
-//    if (n > 0) {
-//        hanoiRecursion(source, auxiliary, target, n - 1);
-//        move(source, target);
-//        hanoiRecursion(auxiliary, target, source, n - 1);
-//    }
-//}
-
-
-
